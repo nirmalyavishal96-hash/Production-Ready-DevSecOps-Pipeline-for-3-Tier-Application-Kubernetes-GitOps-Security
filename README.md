@@ -63,7 +63,7 @@ Database (PostgreSQL)
 
 ## 📸 Screenshots
 
-Include:
+Attached:
 
 * Jenkins Pipeline Success
 * ArgoCD Sync Status
