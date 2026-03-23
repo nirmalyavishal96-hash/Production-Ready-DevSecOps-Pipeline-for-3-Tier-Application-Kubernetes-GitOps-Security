@@ -1,15 +1,25 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
+from flask_migrate import Migrate
 
-app = Flask(
-    __name__,
-    template_folder="templates"
-)
+db = SQLAlchemy()
+bcrypt = Bcrypt()
+migrate = Migrate()
 
-app.config.from_object("app.config.Config")
+def create_app():
+    app = Flask(__name__, template_folder="templates")
 
-db = SQLAlchemy(app)
-bcrypt = Bcrypt(app)
+    app.config.from_object("app.config.Config")
 
-from app import routes
+    db.init_app(app)
+    bcrypt.init_app(app)
+    migrate.init_app(app, db)
+
+    
+    from app.models import models
+    from app.routes import bp
+
+    app.register_blueprint(bp)
+
+    return app

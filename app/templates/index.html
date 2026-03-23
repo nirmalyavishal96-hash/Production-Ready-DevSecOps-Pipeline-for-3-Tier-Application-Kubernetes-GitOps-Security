@@ -4,6 +4,164 @@
     <title>DevSecOps App</title>
 </head>
 <body>
-    <h1>DevSecOps 3-Tier Application Running 🚀</h1>
+
+    <h1>DevSecOps 3-Tier Application Running </h1>
+
+    <hr>
+
+    <h2>Create User</h2>
+
+    <input type="text" id="first_name" placeholder="First Name"><br><br>
+    <input type="text" id="last_name" placeholder="Last Name"><br><br>
+    <input type="email" id="email" placeholder="Email"><br><br>
+    <input type="password" id="password" placeholder="Password"><br><br>
+
+    <button onclick="createUser()">Create User</button>
+
+    <p id="create_result"></p>
+
+    <hr>
+
+    <h2>Login</h2>
+
+    <input type="email" id="login_email" placeholder="Email"><br><br>
+    <input type="password" id="login_password" placeholder="Password"><br><br>
+
+    <button onclick="loginUser()">Login</button>
+
+    <p id="login_result"></p>
+
+    <hr>
+
+    <h2>Tasks</h2>
+
+    <input type="text" id="task_input" placeholder="Enter task">
+    <button onclick="addTask()">Add Task</button>
+
+    <ul id="task_list"></ul>
+
+    <script>
+        let token = "";
+
+        function clearTasks() {
+            document.getElementById("task_list").innerHTML = "";
+        }
+
+        async function createUser() {
+            const data = {
+                first_name: document.getElementById("first_name").value,
+                last_name: document.getElementById("last_name").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value
+            };
+
+            const response = await fetch("/api/create_user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById("create_result").innerText = JSON.stringify(result);
+
+            if (result.token) {
+                token = result.token;
+            }
+        }
+
+        async function loginUser() {
+            const data = {
+                email: document.getElementById("login_email").value,
+                password: document.getElementById("login_password").value
+            };
+
+            const response = await fetch("/api/get_token", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            document.getElementById("login_result").innerText = JSON.stringify(result);
+
+            if (result.token) {
+                token = result.token;
+
+                console.log("Logged in user ID:", result.user_id);
+
+                clearTasks();
+                loadTasks();
+            }
+        }
+
+        async function addTask() {
+            const task = document.getElementById("task_input").value;
+
+            const response = await fetch("/api/submit_task", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                    task: task,
+                    status: "pending"
+                })
+            });
+
+            await response.json();
+            loadTasks();
+        }
+
+        async function loadTasks() {
+            const response = await fetch("/api/get_tasks_for_user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({})
+            });
+
+            const result = await response.json();
+
+            const list = document.getElementById("task_list");
+            list.innerHTML = "";
+
+            if (result.tasks) {
+                result.tasks.forEach(task => {
+                    const li = document.createElement("li");
+                    li.innerText = task.task;
+
+                    const btn = document.createElement("button");
+                    btn.innerText = "Delete";
+                    btn.onclick = () => deleteTask(task.id);
+
+                    li.appendChild(btn);
+                    list.appendChild(li);
+                });
+            }
+        }
+
+        async function deleteTask(taskId) {
+            await fetch("/api/delete_task", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + token
+                },
+                body: JSON.stringify({
+                    task_id: taskId
+                })
+            });
+
+            loadTasks();
+        }
+    </script>
+
 </body>
 </html>

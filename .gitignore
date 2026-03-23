@@ -18,3 +18,4 @@ terraform/
 
 # Logs
 *.log
+.env
