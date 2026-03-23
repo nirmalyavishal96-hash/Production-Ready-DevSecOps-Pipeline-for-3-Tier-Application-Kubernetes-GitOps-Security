@@ -9,10 +9,7 @@ spec:
   selector:
     matchLabels:
       app: flask-app
-  namespaceSelector:
-    matchNames:
-      - default
   endpoints:
-  - port: http
-    path: /metrics
-    interval: 15s
+    - port: http
+      path: /metrics
+      interval: 15s

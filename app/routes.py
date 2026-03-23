@@ -4,14 +4,15 @@ from app.utils.auth import generate_token, requires_auth
 from app.models.models import User, Task
 from app import db
 
-# 🔥 NEW: Prometheus
-from prometheus_client import Counter, generate_latest
+#  Prometheus
+from prometheus_client import Counter, Gauge, generate_latest
+import psutil
 
-# Create Blueprint
 bp = Blueprint("main", __name__)
 
-# 🔥 NEW: Metrics Counter
+#  Metrics
 REQUEST_COUNT = Counter('request_count', 'Total Requests')
+CPU_USAGE = Gauge('cpu_usage_percent', 'CPU usage percent')
 
 
 #  ROUTES 
@@ -34,12 +35,11 @@ def any_root_path(path):
     return render_template('index.html')
 
 
-# USER 
+#  USER 
 
 @bp.route("/api/create_user", methods=["POST"])
 def create_user():
     REQUEST_COUNT.inc()
-
     incoming = request.get_json()
     
     success = User.create_user(incoming)
@@ -58,8 +58,8 @@ def create_user():
 @bp.route("/api/get_token", methods=["POST"])
 def get_token():
     REQUEST_COUNT.inc()
-
     incoming = request.get_json()
+
     user = User.get_user_with_email_and_password(
         incoming["email"],
         incoming["password"]
@@ -122,7 +122,9 @@ def delete_task():
     return jsonify(success=True)
 
 
-#  METRICS ENDPOINT 
+#  METRICS 
+
 @bp.route("/metrics")
 def metrics():
+    CPU_USAGE.set(psutil.cpu_percent())   
     return Response(generate_latest(), mimetype="text/plain")
