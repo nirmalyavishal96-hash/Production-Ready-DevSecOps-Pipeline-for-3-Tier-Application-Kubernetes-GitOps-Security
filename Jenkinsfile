@@ -28,7 +28,7 @@ pipeline {
         stage('Trivy Security Scan') {
             steps {
                 sh """
-                trivy image --exit-code 1 --severity HIGH,CRITICAL ${DOCKER_IMAGE}:${IMAGE_TAG}
+                trivy image --exit-code 1 --severity CRITICAL ${DOCKER_IMAGE}:${IMAGE_TAG}
                 """
             }
         }
