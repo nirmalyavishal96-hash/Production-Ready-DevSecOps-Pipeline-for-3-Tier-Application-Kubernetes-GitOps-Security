@@ -156,7 +156,7 @@ trivy image nirmalyavishal97/devsecops-flask-app:latest
 
 ### 🚨 Prometheus Alert Firing
 
-![Prometheus](screenshots/Prometheus-Target-Firing.png)
+![Prometheus](screenshots/Prometheus_Target_Firing.png)
 
 ### 📧 Email Alert
 
