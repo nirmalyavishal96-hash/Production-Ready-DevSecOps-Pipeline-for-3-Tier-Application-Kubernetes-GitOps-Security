@@ -1,4 +1,4 @@
-#  DevSecOps 3-Tier Application (Flask + Kubernetes + GitOps)
+#   Production-ready DevSecOps pipeline implementing CI/CD, security scanning, GitOps deployment, and real-time monitoring for a 3-tier application.
 
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-Deployment-blue)
 ![Jenkins](https://img.shields.io/badge/Jenkins-CI%2FCD-red)
@@ -45,12 +45,15 @@ This project implements a **production-style DevSecOps pipeline** that:
 
 ```
 User
-  ↓
+ ↓
 Nginx (Reverse Proxy)
-  ↓
+ ↓
 Flask Application (API + Metrics)
-  ↓
+ ↓
 PostgreSQL Database
+
+CI/CD + GitOps Flow:
+GitHub → Jenkins → Docker → Trivy → DockerHub → ArgoCD → Kubernetes
 
 Monitoring Stack:
 Flask → Prometheus → Alertmanager → Email
@@ -109,14 +112,14 @@ trivy image nirmalyavishal97/devsecops-flask-app:latest
 
 ## 🔁 DevOps Workflow
 
-1. Developer pushes code to GitHub
-2. Jenkins builds Docker image & pushes to DockerHub
-3. Helm chart updated with new image tag
-4. ArgoCD syncs Kubernetes cluster automatically
-5. Application deployed to Kubernetes
-6. Prometheus scrapes metrics
-7. Alerts triggered via Alertmanager
-8. Notifications sent via Email
+1. Code pushed to GitHub triggers Jenkins pipeline
+2. Docker image is built and scanned using Trivy
+3. Vulnerable images are blocked from deployment
+4. Secure images pushed to DockerHub
+5. ArgoCD syncs updated manifests automatically
+6. Kubernetes deploys application with self-healing capability
+7. Prometheus monitors metrics continuously
+8. Alertmanager sends alerts for anomalies
 
 ---
 
@@ -224,7 +227,7 @@ flask db upgrade
 
 ---
 
-## 🔐 Security Considerations
+##  Security Considerations
 
 * Environment variables used for secrets
 * No hardcoded credentials in code
@@ -236,7 +239,7 @@ flask db upgrade
 
 ---
 
-## 🚀 Key Features
+##  Key Features
 
 * 🔐 JWT Authentication
 * 📋 Task Management API
@@ -248,7 +251,7 @@ flask db upgrade
 
 ---
 
-## 🔮 Future Improvements
+## Future Improvements
 
 * Add HPA (Horizontal Pod Autoscaling)
 * Integrate Kubernetes Secrets
@@ -256,6 +259,14 @@ flask db upgrade
 * Implement RBAC & Network Policies
 * Add Tracing (Jaeger)
 * Move to cloud (AWS / Azure)
+
+---
+## Failure Handling & Reliability
+
+- Kubernetes ensures self-healing by restarting failed pods
+- GitOps enables rollback to previous stable versions
+- Alerts notify engineers of issues before system failure
+- Monitoring dashboards provide real-time observability
 
 ---
 
@@ -271,5 +282,9 @@ DevOps Engineer | Cloud | Kubernetes | CI/CD
 
 Give it a ⭐ on GitHub and connect with me on LinkedIn!
 
+---
+##  Real-World Use Case
+
+This project simulates a real-world production environment where secure, automated, and observable deployments are critical for modern applications.
 ---
 
