@@ -283,8 +283,10 @@ DevOps Engineer | Cloud | Kubernetes | CI/CD
 Give it a ⭐ on GitHub and connect with me on LinkedIn!
 
 ---
+
 ##  Real-World Use Case
 
 This project simulates a real-world production environment where secure, automated, and observable deployments are critical for modern applications.
+
 ---
 
