@@ -262,6 +262,7 @@ flask db upgrade
 ## 👨‍💻 Author
 
 **Nirmalya Das**
+
 DevOps Engineer | Cloud | Kubernetes | CI/CD
 
 ---
