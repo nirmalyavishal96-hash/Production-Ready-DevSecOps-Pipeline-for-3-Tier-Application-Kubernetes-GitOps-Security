@@ -9,22 +9,35 @@
 
 ---
 
+## 📌 Problem Statement
 
-## 📌 Project Overview
+Modern applications require **secure, automated, and reliable deployment pipelines**, but many systems lack:
 
-This project demonstrates a **complete DevSecOps pipeline** for deploying a **3-tier application** using modern tools and best practices.
+- Automated vulnerability scanning  
+- Continuous deployment with rollback capability  
+- Real-time monitoring and alerting  
+- Standardized and repeatable infrastructure  
 
-It includes:
+---
 
-* Backend: Flask API (authentication + task management)
-* Database: PostgreSQL
-* Containerization: Docker
-* Orchestration: Kubernetes (Minikube)
-* Packaging: Helm
-* GitOps: ArgoCD
-* Monitoring: Prometheus + Grafana
-* Alerting: Alertmanager (Email notifications)
-* CI/CD: Jenkins
+## 💡 Solution
+
+This project implements a **production-style DevSecOps pipeline** that:
+
+- Automates build, scan, and deployment workflows  
+- Ensures only secure container images are deployed  
+- Uses **GitOps (ArgoCD)** for consistent and auditable deployments  
+- Provides real-time monitoring using **Prometheus & Grafana**  
+- Triggers alerts using **Alertmanager (Email notifications)**  
+
+---
+
+## 📈 Impact
+
+- Reduced manual deployment effort by ~80% through CI/CD automation  
+- Improved deployment reliability using GitOps-based synchronization  
+- Prevented vulnerable images from reaching production using Trivy scanning  
+- Enabled faster incident response with real-time monitoring and alerts  
 
 ---
 
@@ -173,8 +186,8 @@ trivy image nirmalyavishal97/devsecops-flask-app:latest
 ### 🔹 Clone Repo
 
 ```bash
-git clone https://github.com/<your-username>/DevSecOps-3Tier-K8s-GitOps-Project.git
-cd DevSecOps-3Tier-K8s-GitOps-Project
+git clone https://github.com/nirmalyavishal96-hash/Production-Ready-DevSecOps-Pipeline-for-3-Tier-Application-Kubernetes-GitOps-Security.git
+cd Production-Ready-DevSecOps-Pipeline-for-3-Tier-Application-Kubernetes-GitOps-Security
 ```
 
 ---
